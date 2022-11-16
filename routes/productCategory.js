@@ -11,5 +11,7 @@ router.put("/editCategory", checkAuth, checkRoleAuth(["admin"]), ProductCategory
 router.delete("/deleteCategory", checkAuth, checkRoleAuth(["admin"]), ProductCategoryController.deleteCategory)
 router.get("/getCategories", checkAuth, ProductCategoryController.getCategories)
 router.get("/getCategory", checkAuth, ProductCategoryController.getCategory)
+router.get("/getProductCategories/:categoryId", checkAuth, ProductCategoryController.getProductsByCategory)
+
 
 module.exports = router

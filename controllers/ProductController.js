@@ -14,6 +14,7 @@ module.exports = {
         price,
         img,
         description,
+        category
       });
       res.status(200).json(product);
     } catch (error) {

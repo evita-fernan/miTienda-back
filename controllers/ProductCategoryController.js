@@ -83,8 +83,9 @@ module.exports = {
   //Obtener todos los productos de una categoría
   getProductsByCategory: async (req, res) => {
     const { categoryId } = req.params;
-    const products = await Product.findAll({
-      include: { model: ProductCategory, as: "product" },
+    const products = await ProductCategory.findAll({
+      where: { id: categoryId },
+      include: { model: Product, as: "product" },
     });
     try {
       res.json(products);
