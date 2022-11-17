@@ -46,6 +46,15 @@ Product.init(
         },
       },
     },
+    stock: {
+      type: S.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "El precio no puede ser nulo",
+        },
+      },
+    },
   },
   { sequelize: db, modelName: "product" }
 );

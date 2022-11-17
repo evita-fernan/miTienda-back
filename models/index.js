@@ -1,7 +1,6 @@
 const OrderDetail = require("./OrderDetail");
 const Product = require("./Product");
 const ProductCategory = require("./ProductCategory");
-const ProductInventory = require("./ProductInventory");
 const ShoppingCart = require("./ShoppingCart");
 const User = require("./User");
 const UserAddress = require("./UserAddress");
@@ -22,9 +21,6 @@ Product.belongsTo(ProductCategory, {
 });
 ProductCategory.hasMany(Product, { as: "product", foreignKey: "categoryId" });
 
-ProductInventory.belongsTo(Product, { as: "product", foreignKey: "productId" });
-Product.hasOne(ProductInventory, { as: "inventory", foreignKey: "productId" });
-
 OrderDetail.belongsTo(User, { as: "client", foreignKey: "userId" });
 User.hasMany(OrderDetail, { as: "order", foreignKey: "userId" });
 
@@ -41,7 +37,6 @@ module.exports = {
   OrderDetail,
   Product,
   ProductCategory,
-  ProductInventory,
   ShoppingCart,
   User,
   UserAddress,
