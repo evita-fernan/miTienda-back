@@ -85,7 +85,7 @@ module.exports = {
     const { categoryId } = req.params;
     const products = await ProductCategory.findAll({
       where: { id: categoryId },
-      include: { model: Product, as: "product" },
+      include: { model: Product },
     });
     try {
       res.json(products);

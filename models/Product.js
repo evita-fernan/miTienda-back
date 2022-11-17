@@ -51,7 +51,7 @@ Product.init(
       allowNull: false,
       validate: {
         notNull: {
-          msg: "El precio no puede ser nulo",
+          msg: "El stock no puede ser nulo",
         },
       },
     },

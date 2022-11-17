@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const Product = require("../models/Product");
 const ProductCategory = require("../models/ProductCategory");
-const ProductInventory = require("../models/ProductInventory");
 require("dotenv").config();
 
 module.exports = {
@@ -14,7 +13,7 @@ module.exports = {
         price,
         img,
         description,
-        category
+        category,
       });
       res.status(200).json(product);
     } catch (error) {
@@ -68,9 +67,10 @@ module.exports = {
 
   //Obtener todos los productos de una categoría
   getAllProducts: async (req, res) => {
-    const { categoryId } = req.params;
     try {
-      const products = await Product.findAll({ include: {model: ProductCategory, as: "product"} });
+      const products = await Product.findAll({
+        include: { model: ProductCategory, as: "category" },
+      });
       res.status(200).json(products);
     } catch (error) {
       return res.status(500).json({ error: error.message });
