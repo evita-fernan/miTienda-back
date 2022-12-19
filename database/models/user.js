@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -10,15 +8,72 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasOne(models.UserAddress, { foreignKey: "userId" });
+      User.hasMany(models.UserPayment, { foreignKey: "userId" });
+      User.hasMany(models.OrderDetail, { foreignKey: "userId" });
+      User.belongsTo(models.Role, { foreignKey: "roleId" });
+      User.hasMany(models.ShoppingCart, { foreignKey: "userId" });
     }
   }
-  User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+  User.init(
+    {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "The name cannot be null",
+          },
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "The name cannot be null",
+          },
+        },
+      },
+      fullName: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        set(value) {
+          throw new Error("Can not modify fullname");
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          args: true,
+          msg: "The email already exists",
+        },
+        validate: {
+          notNull: {
+            msg: "The email cannot be null",
+          },
+          isEmail: true,
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "The password cannot be null",
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+      timestamps: true,
+      paranoid: true,
+    }
+  );
   return User;
 };
