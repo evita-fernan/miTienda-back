@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.UserAddress, { foreignKey: "userId" });
       User.hasMany(models.UserPayment, { foreignKey: "userId" });
       User.hasMany(models.OrderDetail, { foreignKey: "userId" });
-      User.belongsTo(models.Role, { foreignKey: "roleId" });
       User.hasMany(models.ShoppingCart, { foreignKey: "userId" });
     }
   }
@@ -33,15 +32,6 @@ module.exports = (sequelize, DataTypes) => {
           notNull: {
             msg: "The name cannot be null",
           },
-        },
-      },
-      fullName: {
-        type: DataTypes.VIRTUAL,
-        get() {
-          return `${this.firstName} ${this.lastName}`;
-        },
-        set(value) {
-          throw new Error("Can not modify fullname");
         },
       },
       email: {
@@ -66,6 +56,9 @@ module.exports = (sequelize, DataTypes) => {
             msg: "The password cannot be null",
           },
         },
+      },
+      role: {
+        type: DataTypes.STRING,
       },
     },
     {

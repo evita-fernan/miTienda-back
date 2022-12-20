@@ -24,8 +24,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      roleId: {
-        type: Sequelize.INTEGER,
+      role: {
+        type: Sequelize.STRING,
+        defaultValue: "user",
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +36,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         defaultValue: Sequelize.fn("now"),
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
         type: Sequelize.DATE,
       },
     });

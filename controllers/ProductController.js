@@ -1,48 +1,32 @@
-const User = require("../models/User");
-const Product = require("../models/Product");
-const ProductCategory = require("../models/ProductCategory");
+const { Product } = require("../database/models");
+const { Category } = require("../database/models");
 require("dotenv").config();
 
 module.exports = {
   //Cargar un producto
   addProduct: async (req, res) => {
-    const { name, price, img, description, category } = req.body;
     try {
-      const product = await Product.create({
-        name,
-        price,
-        img,
-        description,
-        category,
-      });
-      res.status(200).json(product);
+      const product = await Product.create(req.body);
+      res.status(201).json(product);
     } catch (error) {
-      return res.status(500).json({ error });
+      return res.status(500).json({ error: error.message });
     }
   },
 
   //Editar un producto
   editProduct: async (req, res) => {
     const { id } = req.params;
-    const { name, price, img, description, category } = req.body;
     try {
       const product = await Product.findByPk(id);
       if (!product) {
-        return res.status(404).json({ msg: "Producto no encontrado" });
+        return res.status(404).json({ msg: "Product not found" });
       }
-      const productEdited = await Product.update(
-        {
-          name,
-          price,
-          img,
-          description,
-          category,
-        },
-        { where: { id: id } }
-      );
+      const productEdited = await Product.update(req.body, {
+        where: { id: id },
+      });
       res
         .status(200)
-        .json(productEdited, { msg: "Producto editado exitosamente" });
+        .json(productEdited, { msg: "Product successfully edited" });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -54,12 +38,12 @@ module.exports = {
     try {
       const product = await Product.findByPk(id);
       if (!product) {
-        return res.status(404).json({ msg: "Producto no encontrado" });
+        return res.status(404).json({ msg: "Product not found" });
       }
       const productDeleted = await Product.destroy({ where: { id: id } });
       res
         .status(200)
-        .json(productDeleted, { msg: "Producto eliminado exitosamente" });
+        .json(productDeleted, { msg: "Product successfully removed" });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -69,7 +53,7 @@ module.exports = {
   getAllProducts: async (req, res) => {
     try {
       const products = await Product.findAll({
-        include: { model: ProductCategory, as: "category" },
+        include: { model: Category },
       });
       res.status(200).json(products);
     } catch (error) {
@@ -81,9 +65,9 @@ module.exports = {
   getProduct: async (req, res) => {
     const { id } = req.params;
     try {
-      const product = await Product.findByPk(id, { include: ProductCategory });
+      const product = await Product.findByPk(id, { include: Category });
       if (!product) {
-        return res.status(404).json({ msg: "Producto no encontrado" });
+        return res.status(404).json({ msg: "Product not found" });
       }
       res.status(200).json(product);
     } catch (error) {

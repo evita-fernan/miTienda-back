@@ -1,21 +1,20 @@
 const { decodeToken, verifyToken } = require("../helper/generateToken");
 const { User } = require("../database/models");
 
-const checkRoleAuth = (roles) => async (req, res, next) => {
+const authentication = async (req, res, next) => {
   try {
-    const auth = await req.headers["authorization"];
+    const auth = req.headers["authorization"];
     if (!auth) throw new Error("Token do not exist", 404);
     const token = auth.split(" ")[1];
     const decoded = decodeToken(token);
-    const user = await User.findByPk(decoded.id);
-    if (decoded.id === user.id || decoded.role === "admin") {
-      return next();
-    } else {
-      throw new Error("Noy authorizated", 403);
-    }
+    const verified = verifyToken(token);
+    const { id } = decoded;
+    const user = await User.findByPk(id, { raw: true });
+    if (!user || !verified) throw new Error("Invalid token", 403);
+    return next();
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
 
-module.exports = checkRoleAuth;
+module.exports = authentication;

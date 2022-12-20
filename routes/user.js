@@ -1,37 +1,33 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
-const UserAddress = require("../models/UserAddress");
 const AuthController = require("../controllers/AuthController");
 const UserController = require("../controllers/UserController");
-const checkAuth = require("../middlawares/auth");
+const authentication = require("../middlawares/authentication");
 const checkRoleAuth = require("../middlawares/roleAuth");
 
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);
 
-router.post("/:id/registerAddress", checkAuth, UserController.registerAddress);
-router.put("/:id/editAddress", checkAuth, UserController.editAddress);
-router.get("/:id/getAddress", checkAuth, UserController.getAddress);
-router.get(
-  "/getAllAddress",
-  checkAuth,
-  checkRoleAuth(["admin"]),
-  UserController.getAllAddress
+router.post(
+  "/:id/registerAddress",
+  authentication,
+  UserController.registerAddress
 );
+router.put("/:id/editAddress", authentication, UserController.editAddress);
+router.get("/:id/getAddress", authentication, UserController.getAddress);
 
 router.put("/forgotPassword", AuthController.forgotPassword);
-router.put("/newPassword", checkAuth, AuthController.newPassword);
+router.put("/newPassword", authentication, AuthController.newPassword);
 
 router.get(
   "/getAllUsers",
-  checkAuth,
+  authentication,
   checkRoleAuth(["admin"]),
   UserController.getAllUsers
 );
 router.get(
   "/getUser/:id",
-  checkAuth,
+  authentication,
   checkRoleAuth(["admin"]),
   UserController.getUser
 );

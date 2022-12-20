@@ -1,5 +1,5 @@
-const ProductCategory = require("../models/ProductCategory");
-const Product = require("../models/Product");
+const { Category } = require("../database/models");
+const { Product } = require("../database/models");
 require("dotenv").config();
 
 module.exports = {
@@ -7,10 +7,10 @@ module.exports = {
   addCategory: async (req, res) => {
     try {
       const { name } = req.body;
-      const category = await ProductCategory.create({ name });
-      res.send(category);
+      const category = await Category.create({ name });
+      res.status(201).json(category);
     } catch (error) {
-      res.status(400).send(error);
+      res.status(400).json({ error: error.message });
     }
   },
 
@@ -19,9 +19,9 @@ module.exports = {
     const { id } = req.params;
     const { name } = req.body;
     try {
-      const category = await ProductCategory.findByPk(id);
+      const category = await Category.findByPk(id);
       if (!category) {
-        return res.status(404).json({ msg: "Categoría no encontrada" });
+        return res.status(404).json({ msg: "Category not found" });
       }
       const categoryEdited = await ProductCategory.update(
         {
@@ -31,7 +31,7 @@ module.exports = {
       );
       res
         .status(200)
-        .json(categoryEdited, { msg: "Producto editado exitosamente" });
+        .json(categoryEdited, { msg: "Category successfully edited" });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -41,16 +41,16 @@ module.exports = {
   deleteCategory: async (req, res) => {
     const { id } = req.params;
     try {
-      const category = await ProductCategory.findByPk(id);
+      const category = await Category.findByPk(id);
       if (!category) {
-        return res.status(404).json({ msg: "Categoría no encontrada" });
+        return res.status(404).json({ msg: "Category not found" });
       }
       const categoryDeleted = await ProductCategory.destroy({
         where: { id: id },
       });
       res
         .status(200)
-        .json(categoryDeleted, { msg: "Producto eliminado exitosamente" });
+        .json(categoryDeleted, { msg: "Category successfully removed" });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -59,10 +59,10 @@ module.exports = {
   //Obtener categorías
   getCategories: async (req, res) => {
     try {
-      const categories = await ProductCategory.findAll();
-      res.send(categories);
+      const categories = await Category.findAll();
+      res.status(200).json(categories);
     } catch (error) {
-      res.status(400).send(error);
+      return res.status(500).json({ error: error.message });
     }
   },
 
@@ -70,25 +70,25 @@ module.exports = {
   getCategory: async (req, res) => {
     const { id } = req.params;
     try {
-      const category = await ProductCategory.findByPk(id);
+      const category = await Category.findByPk(id);
       if (!category) {
-        return res.status(404).json({ msg: "Categoría no encontrada" });
+        return res.status(404).json({ msg: "Category not found" });
       }
-      res.send(category);
+      res.status(200).json(category);
     } catch (error) {
-      res.status(400).send(error);
+      return res.status(500).json({ error: error.message });
     }
   },
 
   //Obtener todos los productos de una categoría
   getProductsByCategory: async (req, res) => {
     const { categoryId } = req.params;
-    const products = await ProductCategory.findAll({
+    const products = await Category.findAll({
       where: { id: categoryId },
       include: { model: Product },
     });
     try {
-      res.json(products);
+      res.status(200).json(products);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
