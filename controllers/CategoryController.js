@@ -37,25 +37,6 @@ module.exports = {
     }
   },
 
-  //Eliminar categoría
-  deleteCategory: async (req, res) => {
-    const { id } = req.params;
-    try {
-      const category = await Category.findByPk(id);
-      if (!category) {
-        return res.status(404).json({ msg: "Category not found" });
-      }
-      const categoryDeleted = await ProductCategory.destroy({
-        where: { id: id },
-      });
-      res
-        .status(200)
-        .json(categoryDeleted, { msg: "Category successfully removed" });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
-  },
-
   //Obtener categorías
   getCategories: async (req, res) => {
     try {

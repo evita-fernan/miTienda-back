@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false,
       },
       accountNumber: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       expiry: {
@@ -37,6 +37,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         defaultValue: Sequelize.fn("now"),
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
         type: Sequelize.DATE,
       },
     });

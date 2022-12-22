@@ -16,12 +16,7 @@ router.put(
   checkRoleAuth(["admin"]),
   CategoryController.editCategory
 );
-router.delete(
-  "/deleteCategory",
-  authentication,
-  checkRoleAuth(["admin"]),
-  CategoryController.deleteCategory
-);
+
 router.get("/getCategories", authentication, CategoryController.getCategories);
 router.get("/getCategory", authentication, CategoryController.getCategory);
 router.get(

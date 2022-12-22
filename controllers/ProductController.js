@@ -39,8 +39,7 @@ module.exports = {
       if (!product) {
         return res.status(404).json({ msg: "Product not found" });
       }
-      const deleted = await Product.destroy({ where: { id: id } });
-      console.log(deleted);
+      await Product.destroy({ where: { id: id } });
       res.status(200).json({ msg: "Product successfully removed" });
     } catch (error) {
       return res.status(500).json({ error: error.message });

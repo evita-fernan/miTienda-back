@@ -18,19 +18,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isIn: {
-            args: [["debit card", "credit cart"]],
+            args: [["debit card", "credit card"]],
           },
         },
       },
       provider: { type: DataTypes.STRING, allowNull: false },
-      accountNumber: { type: DataTypes.INTEGER, allowNull: false },
+      accountNumber: { type: DataTypes.STRING, allowNull: false },
       expiry: { type: DataTypes.DATE, allowNull: false },
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "UserPayment",
       timestamps: true,
-      paranoid: true,
     }
   );
   return UserPayment;
