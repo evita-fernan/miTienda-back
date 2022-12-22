@@ -21,12 +21,10 @@ module.exports = {
       if (!product) {
         return res.status(404).json({ msg: "Product not found" });
       }
-      const productEdited = await Product.update(req.body, {
+      await Product.update(req.body, {
         where: { id: id },
       });
-      res
-        .status(200)
-        .json(productEdited, { msg: "Product successfully edited" });
+      res.status(200).json({ msg: "Product successfully edited" });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -36,14 +34,14 @@ module.exports = {
   deleteProduct: async (req, res) => {
     const { id } = req.params;
     try {
-      const product = await Product.findByPk(id);
+      const product = await Product.findByPk(id, { raw: true });
+      console.log(product);
       if (!product) {
         return res.status(404).json({ msg: "Product not found" });
       }
-      const productDeleted = await Product.destroy({ where: { id: id } });
-      res
-        .status(200)
-        .json(productDeleted, { msg: "Product successfully removed" });
+      const deleted = await Product.destroy({ where: { id: id } });
+      console.log(deleted);
+      res.status(200).json({ msg: "Product successfully removed" });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

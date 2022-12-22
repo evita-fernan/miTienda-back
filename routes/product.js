@@ -5,8 +5,8 @@ const authentication = require("../middlawares/authentication")
 const checkRoleAuth = require("../middlawares/roleAuth")
 
 router.post("/addProduct", authentication, checkRoleAuth(["admin"]), ProductController.addProduct)
-router.put("/editProduct", authentication, checkRoleAuth(["admin"]), ProductController.editProduct)
-router.delete("/deleteProduct", authentication, checkRoleAuth(["admin"]), ProductController.deleteProduct)
+router.put("/editProduct/:id", authentication, checkRoleAuth(["admin"]), ProductController.editProduct)
+router.delete("/deleteProduct/:id", authentication, checkRoleAuth(["admin"]), ProductController.deleteProduct)
 router.get("/getAllProducts", authentication, ProductController.getAllProducts)
 router.get("/getProduct", authentication, ProductController.getProduct)
 

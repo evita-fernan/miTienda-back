@@ -1,4 +1,4 @@
-const { decodeToken, verifyToken } = require("../helper/generateToken");
+const { decodeToken } = require("../helper/generateToken");
 const { User } = require("../database/models");
 
 const checkRoleAuth = (roles) => async (req, res, next) => {
@@ -11,7 +11,7 @@ const checkRoleAuth = (roles) => async (req, res, next) => {
     if (decoded.id === user.id || decoded.role === "admin") {
       return next();
     } else {
-      throw new Error("Noy authorizated", 403);
+      throw new Error("Not authorizated", 403);
     }
   } catch (error) {
     return res.status(500).json({ error: error.message });
