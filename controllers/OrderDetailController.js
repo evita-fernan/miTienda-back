@@ -15,11 +15,11 @@ module.exports = {
   getOrder: async (req, res) => {
     const { userId } = req.params;
     try {
-      const user = await User.findByPk({ where: { userId } });
+      const user = await User.findByPk(userId, { raw: true });
       if (!user) {
         return res.status(404).json({ msg: "User not found" });
       }
-      const orders = await OrderDetail.findAll({ where: { userId } });
+      const orders = await OrderDetail.findAll({ where: { userId: userId } });
       return res.status(200).json(orders);
     } catch (error) {
       res.status(500).json({ error: error.message });

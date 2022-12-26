@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
   ShoppingCart.init(
     {
       quantity: { type: DataTypes.INTEGER, allowNull: false },
-      total: { type: DataTypes.DECIMAL, allowNull: false },
       userId: {type: DataTypes.INTEGER},
       productId: {type: DataTypes.INTEGER},
     },

@@ -13,10 +13,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false 
       },
-      subtotal: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false 
-      },
       userId: {
         type: Sequelize.INTEGER,
         references:{model: "users", key: "id"}

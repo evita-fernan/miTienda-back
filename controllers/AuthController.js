@@ -23,8 +23,7 @@ module.exports = {
         password,
         role,
       });
-      console.log(user);
-      sendEmailRegister(user);
+      //sendEmailRegister(user);
       res.status(201).json({ user });
     } catch (error) {
       return res.status(500).json({ error: error.message });
@@ -39,8 +38,6 @@ module.exports = {
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
-      console.log("SOY PASSWORD puesta en login", password);
-      console.log("SOY PASSWORD guardada", user.password);
       const validPassword = bcrypt.compareSync(password, user.password);
       if (!validPassword) {
         return res.status(401).json({ error: "Password incorrect" });
