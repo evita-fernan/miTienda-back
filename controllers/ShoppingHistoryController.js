@@ -31,15 +31,20 @@ module.exports = {
     console.log("SOY ORDER", order);
     try {
       const newHistory = await ShoppingHistory.create(order, { raw: true });
-      await detail.forEach((element) => {
-        element.shoppingHistoryId = newHistory.id;
-      });
+ 
       console.log("\n\n PASO N3 \n\n");
       console.log("SOY NEW HISTORY", newHistory);
+      
       try {
         const newOrder = await OrderDetail.bulkCreate(detail,  { raw: true });
         console.log("\n\n PASO N4 \n\n");
         console.log("SOY NEW ORDER", newOrder);
+
+        await order.forEach((element) => {
+          element.orderDetailId = newOrder.id;
+          console.log("\n\n PASO N5 \n\n");
+          console.log("SOY ORDER DETAIL ID", element.orderDetailId);
+        });
         try {
           await ShoppingCart.destroy({ where: { userId: order.userId } });
           res.status(200).json({ msg: "Shopping cart deleted" });

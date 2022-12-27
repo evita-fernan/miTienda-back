@@ -1,4 +1,4 @@
-const { OrderDetail, User } = require("../database/models");
+const { OrderDetail, User, Product } = require("../database/models");
 
 module.exports = {
   addOrder: async (req, res) => {
@@ -17,7 +17,10 @@ module.exports = {
       if (!user) {
         return res.status(404).json({ msg: "User not found" });
       }
-      const orders = await OrderDetail.findAll({ where: { userId: userId } });
+      const orders = await OrderDetail.findAll({
+        where: { userId: userId },
+        include: Product,
+      });
       return res.status(200).json(orders);
     } catch (error) {
       res.status(500).json({ error: error.message });
