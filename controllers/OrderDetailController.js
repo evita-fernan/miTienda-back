@@ -1,6 +1,4 @@
-const { OrderDetail } = require("../database/models");
-const { User } = require("../database/models");
-require("dotenv").config();
+const { OrderDetail, User } = require("../database/models");
 
 module.exports = {
   addOrder: async (req, res) => {

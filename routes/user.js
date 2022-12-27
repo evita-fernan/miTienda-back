@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const AuthController = require("../controllers/AuthController");
 const UserController = require("../controllers/UserController");
-const authentication = require("../middlawares/authentication");
-const checkRoleAuth = require("../middlawares/roleAuth");
+const authentication = require("../middlewares/authentication");
+const checkRoleAuth = require("../middlewares/roleAuth");
 
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       UserAddress.belongsTo(models.User, { foreignKey: "userId" });
+      UserAddress.hasMany(models.ShoppingHistory), {foreignKey: "userAddressId"}
     }
   }
   UserAddress.init(

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const PaymentController = require("../controllers/UserPaymentController");
-const authentication = require("../middlawares/authentication");
+const authentication = require("../middlewares/authentication");
 
 router.post("/addPayment/:id", authentication, PaymentController.addPayment);
 router.put("/editPayment/:id", authentication, PaymentController.editPayment);

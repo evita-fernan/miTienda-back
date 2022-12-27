@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const ProductController = require("../controllers/ProductController")
-const authentication = require("../middlawares/authentication")
-const checkRoleAuth = require("../middlawares/roleAuth")
+const authentication = require("../middlewares/authentication")
+const checkRoleAuth = require("../middlewares/roleAuth")
 
 router.post("/addProduct", authentication, checkRoleAuth(["admin"]), ProductController.addProduct)
 router.put("/editProduct/:id", authentication, checkRoleAuth(["admin"]), ProductController.editProduct)
