@@ -7,15 +7,11 @@ module.exports = {
       {
         paymentType: "debit card",
         provider: "visa",
-        accountNumber: "4949878745456006",
-        expiry: "2025-12-25",
         userId: 1,
       },
       {
         paymentType: "credit card",
         provider: "visa",
-        accountNumber: "4949878745456006",
-        expiry: "2025-12-25",
         userId: 2,
       },
     ]);

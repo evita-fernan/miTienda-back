@@ -24,8 +24,6 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       provider: { type: DataTypes.STRING, allowNull: false },
-      accountNumber: { type: DataTypes.STRING, allowNull: false },
-      expiry: { type: DataTypes.DATE, allowNull: false },
       userId: DataTypes.INTEGER,
     },
     {

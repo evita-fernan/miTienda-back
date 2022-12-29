@@ -17,14 +17,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      accountNumber: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      expiry: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
       userId: {
         type: Sequelize.INTEGER,
         references:{model: "users", key: "id"}

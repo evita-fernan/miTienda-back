@@ -20,7 +20,7 @@ module.exports = {
     });
     console.log("\n\n PASO N1 \n\n");
     console.log("SOY DETAIL", detail);
-    let order = {
+    let shoppingHistory = {
       finalPrice: req.body.finalPrice,
       userId: req.body.userId,
       userAddressId: req.body.userAddressId,
@@ -28,7 +28,7 @@ module.exports = {
       orderDetailId: req.body.orderDetailId,
     };
     console.log("\n\n PASO N2 \n\n");
-    console.log("SOY ORDER", order);
+    console.log("SOY ORDER", shoppingHistory);
     try {
       const newHistory = await ShoppingHistory.create(order, { raw: true });
  
@@ -40,10 +40,10 @@ module.exports = {
         console.log("\n\n PASO N4 \n\n");
         console.log("SOY NEW ORDER", newOrder);
 
-        await order.forEach((element) => {
+        await shoppingHistory.forEach((element) => {
           element.orderDetailId = newOrder.id;
           console.log("\n\n PASO N5 \n\n");
-          console.log("SOY ORDER DETAIL ID", element.orderDetailId);
+          console.log("SOY ORDER DETAIL ID", newOrder.id);
         });
         try {
           await ShoppingCart.destroy({ where: { userId: order.userId } });
