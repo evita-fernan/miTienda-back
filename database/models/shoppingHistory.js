@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      ShoppingHistory.belongsTo(models.User, { foreignKey: "userId" });
       ShoppingHistory.belongsTo(models.UserAddress, {
         foreignKey: "userAddressId",
       });
@@ -23,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
   ShoppingHistory.init(
     {
       finalPrice: { type: DataTypes.DECIMAL, allowNull: false },
-      userId: { type: DataTypes.INTEGER },
       userAddressId: { type: DataTypes.INTEGER },
       userPaymentId: { type: DataTypes.INTEGER },
       orderDetailId: { type: DataTypes.INTEGER },

@@ -12,7 +12,6 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      userId: { type: Sequelize.INTEGER },
       userAddressId: { type: Sequelize.INTEGER },
       userPaymentId: { type: Sequelize.INTEGER },
       orderDetailId: { type: Sequelize.INTEGER },

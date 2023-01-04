@@ -9,15 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      productName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      price: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

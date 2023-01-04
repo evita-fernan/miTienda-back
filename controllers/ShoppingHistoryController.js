@@ -20,33 +20,40 @@ module.exports = {
     });
     console.log("\n\n PASO N1 \n\n");
     console.log("SOY DETAIL", detail);
-    let shoppingHistory = {
+    const shoppingHistory = {
       finalPrice: req.body.finalPrice,
       userId: req.body.userId,
       userAddressId: req.body.userAddressId,
       userPaymentId: req.body.userPaymentId,
-      orderDetailId: req.body.orderDetailId,
     };
+    const arrShoppingHistory = Array.from(shoppingHistory);
     console.log("\n\n PASO N2 \n\n");
-    console.log("SOY ORDER", shoppingHistory);
+    console.log("SOY LA DATA DE SHOPPING HISTORY", shoppingHistory);
     try {
-      const newHistory = await ShoppingHistory.create(order, { raw: true });
- 
+      const newHistory = await ShoppingHistory.create(shoppingHistory);
+
       console.log("\n\n PASO N3 \n\n");
       console.log("SOY NEW HISTORY", newHistory);
-      
+
       try {
-        const newOrder = await OrderDetail.bulkCreate(detail,  { raw: true });
+        const newOrder = await OrderDetail.bulkCreate(detail);
         console.log("\n\n PASO N4 \n\n");
         console.log("SOY NEW ORDER", newOrder);
+        console.log("\n\n PASO N5 \n\n");
+        console.log("SOY ORDER DETAIL ID", newOrder.id);
 
-        await shoppingHistory.forEach((element) => {
+        arrShoppingHistory.forEach((element) => {
           element.orderDetailId = newOrder.id;
           console.log("\n\n PASO N5 \n\n");
-          console.log("SOY ORDER DETAIL ID", newOrder.id);
+          console.log(
+            "SOY ORDER DETAIL ID",
+            newOrder.OrderDetail.dataValues.id
+          );
         });
         try {
-          await ShoppingCart.destroy({ where: { userId: order.userId } });
+          await ShoppingCart.destroy({
+            where: { userId: shoppingHistory.userId },
+          });
           res.status(200).json({ msg: "Shopping cart deleted" });
         } catch (error) {
           res.status(500).json({ msg: error.message });
